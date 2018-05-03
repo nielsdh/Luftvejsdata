@@ -2,7 +2,9 @@
 title: "Luftvejsdata Visualisering"
 author: "Niels Dalum Hansen"
 date: "5 apr 2018"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -13,7 +15,7 @@ library(TSA)
 
 ## Influenza data
 ```{r load data, include=FALSE}
-datafolder <- "../data/"
+datafolder <- "S:/BigData/data/"
 influenza_file <- paste(datafolder, "influenza/Influenza data 2010-2018.csv", sep="")
 influenza_data <- read.csv(influenza_file, sep = ";")
 influenza_data$weeknr <- strftime(influenza_data$prdate, format="%Y-%V")
@@ -30,7 +32,7 @@ We have influenza data from 2010 to 2018
 
 ### Plots of influenza data
 
-```{r influenza plot, echo=FALSE}
+```{r influenza plot, echo=FALSE, warning=FALSE}
 ggplot(data=influenza_data_weekly, aes(weekdate, y=value, color=variable)) + 
   geom_line(aes(y=a, col="a")) +
   geom_line(aes(y=b, col="b")) +
@@ -40,35 +42,35 @@ ggplot(data=influenza_data_weekly, aes(weekdate, y=value, color=variable)) +
   labs(title="Plot of influenza data", x="Date", y="Number of weekly positive tests")
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE}
 p = periodogram(influenza_data_weekly$a, plot=FALSE)
 dd = data.frame(freq=1/p$freq, spec=p$spec)
 #order = dd[order(-dd$spec),]
 ggplot(data=dd) + geom_line(aes(freq, spec)) + geom_point(aes(freq, spec)) + xlim(0, 104) + labs(x="Weeks", y="", title="Fourier transform of influenza a", caption="Frequency scaled to weeks")
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE}
 p = periodogram(influenza_data_weekly$b, plot=FALSE)
 dd = data.frame(freq=1/p$freq, spec=p$spec)
 #order = dd[order(-dd$spec),]
 ggplot(data=dd) + geom_line(aes(freq, spec)) + geom_point(aes(freq, spec)) + xlim(0, 104) + labs(x="Weeks", y="", title="Fourier transform of influenza b", caption="Frequency scaled to weeks")
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE}
 p = periodogram(influenza_data_weekly$c, plot=FALSE)
 dd = data.frame(freq=1/p$freq, spec=p$spec)
 #order = dd[order(-dd$spec),]
 ggplot(data=dd) + geom_line(aes(freq, spec)) + geom_point(aes(freq, spec)) + xlim(0, 104) + labs(x="Weeks", y="", title="Fourier transform of influenza c", caption="Frequency scaled to weeks")
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, include=FALSE}
 p = periodogram(influenza_data_weekly$h1n1, plot=FALSE)
 dd = data.frame(freq=1/p$freq, spec=p$spec)
 #order = dd[order(-dd$spec),]
 ggplot(data=dd) + geom_line(aes(freq, spec)) + geom_point(aes(freq, spec)) + xlim(0, 104) + labs(x="Weeks", y="", title="Fourier transform of influenza h1n1", caption="Frequency scaled to weeks")
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE}
 p = periodogram(influenza_data_weekly$h3n2, plot=FALSE)
 dd = data.frame(freq=1/p$freq, spec=p$spec)
 #order = dd[order(-dd$spec),]
