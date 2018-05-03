@@ -34,3 +34,4 @@ vignettes/*.pdf
 
 # ignore html files for the r markdown scripts
 *.html
+*.pdf
