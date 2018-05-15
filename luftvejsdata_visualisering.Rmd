@@ -96,6 +96,13 @@ mycoplasma_person <- mycoplasma_data$person_data
 hist(mycoplasma_person$age, xlab="Alder", main ="Histogram af alder ved prøvetagning")
 ```
 
+```{r, echo=FALSE, warning=FALSE}
+p = periodogram(mycoplasma_data_weekly$mycopl, plot=FALSE)
+dd = data.frame(freq=1/p$freq, spec=p$spec)
+#order = dd[order(-dd$spec),]
+ggplot(data=dd) + geom_line(aes(freq, spec)) + geom_point(aes(freq, spec)) + xlim(0, 104) + labs(x="Weeks", y="", title="Fourier transform of mycoplasma tests", caption="Frequency scaled to weeks")
+```
+
 ## Pneumokok data
 
 ```{r load data, include=FALSE}
